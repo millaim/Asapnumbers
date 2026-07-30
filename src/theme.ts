@@ -1,92 +1,123 @@
 /**
- * theme.ts — Single source of truth for brand look & feel.
+ * theme.ts — Single source of truth for the AsapNumbers brand.
  *
- * ┌──────────────────────────────────────────────────────────────────────┐
- * │  SWAP-IN CHECKLIST (replace every value marked `TODO(brand)` below)   │
- * │  • Colors: pull the exact hex values from numberasap.com              │
- * │  • Fonts:  swap Inter for the brand's real typeface if different      │
- * │  • Logo:   see src/components/Logo.tsx                                 │
- * └──────────────────────────────────────────────────────────────────────┘
+ * Values are matched to the real product screenshots (deep-navy fintech UI,
+ * indigo→purple gradients, cyan auth accents, green status chips, Naira ₦).
+ * Anything I couldn't sample exactly is marked TODO(brand) — tweak in one place.
  *
- * NOTE: The live site (numberasap.com) could not be reached from the build
- * environment (network policy blocked the host), so the copy and colors here
- * are tasteful, Apple-keynote-style placeholders in the "get a business number,
- * fast" direction. Everything below is designed to be swapped in one place.
+ * Format: VERTICAL 1080×1920 @ 60fps (per direction). A landscape variant will
+ * reuse these tokens; only layout constants change.
  */
 
 // ─────────────────────────────────────────────────────────────────────────────
-// COLORS  (dark-mode, cinematic — TODO(brand): confirm against numberasap.com)
+// COLORS  (sampled from the AsapNumbers dashboard/auth screens)
 // ─────────────────────────────────────────────────────────────────────────────
 export const colors = {
-  // Deep, rich background. Near-black with a faint cool-blue cast.
-  bg: '#05070B',
-  bgDeep: '#020306', // used at the vignette edges
-  // Card / surface color for UI mockups.
-  surface: '#10141C',
-  surfaceBorder: 'rgba(255,255,255,0.08)',
+  // App background — very dark navy, subtle blue cast.
+  bg: '#080B14',
+  bgPanel: '#0C1120', // sidebar / raised panels
+  bgElevated: '#10162A',
+
+  // Cards / surfaces
+  surface: '#111827',
+  surface2: '#0E1524',
+  surfaceBorder: 'rgba(255,255,255,0.07)',
+  surfaceBorderStrong: 'rgba(255,255,255,0.12)',
 
   // Typography
-  textPrimary: '#F6F8FC',
-  textSecondary: '#9AA4B6',
-  textMuted: '#5C6678',
+  textPrimary: '#F4F7FB',
+  textSecondary: '#9AA6BC',
+  textMuted: '#5D6980',
 
-  // TODO(brand): replace these two with the real accent + secondary accent.
-  accent: '#2E8BFF', // confident tech blue (placeholder)
-  accentSoft: '#7FB4FF', // lighter tint for glows/highlights (placeholder)
-  accent2: '#8B5CFF', // secondary accent for gradient lighting (placeholder)
+  // Brand accents — the app uses an indigo→purple family…
+  accent: '#4F6BFF', // primary indigo (buttons, active nav, links)
+  accent2: '#8B5CF6', // purple (gradient partner)
+  accentSoft: '#8AA2FF', // lighter indigo for glows/highlights
+  // …the auth screens + logo use a cyan→blue family.
+  cyan: '#22D3EE',
+  cyanBlue: '#38BDF8',
 
-  // Glow colors (derived from accent — usually no need to edit directly)
-  glowPrimary: 'rgba(46,139,255,0.55)',
-  glowSecondary: 'rgba(139,92,255,0.40)',
+  // Status
+  success: '#22C55E',
+  successSoft: '#34D399',
+  warning: '#F59E0B',
+  danger: '#F43F5E',
+
+  // Gradients (the wallet card, primary buttons, "Get Number")
+  gradPrimary: 'linear-gradient(135deg, #5A6EF6 0%, #8B5CF6 100%)',
+  gradCyan: 'linear-gradient(135deg, #22D3EE 0%, #3B82F6 100%)',
+  gradWallet: 'linear-gradient(135deg, #5568F0 0%, #7E5BEE 55%, #8B5CF6 100%)',
+
+  // Glow colors derived from the accents
+  glowPrimary: 'rgba(79,107,255,0.55)',
+  glowSecondary: 'rgba(139,92,246,0.42)',
+  glowCyan: 'rgba(34,211,238,0.40)',
+} as const;
+
+/** The brand wordmark colors: "ASAP" (light) + "NUMBERS" (blue). */
+export const wordmark = {
+  first: '#F4F7FB', // ASAP
+  second: '#4F7DFF', // NUMBERS  — TODO(brand): confirm exact blue
 } as const;
 
 // ─────────────────────────────────────────────────────────────────────────────
-// TYPOGRAPHY
+// TYPOGRAPHY  (loaded in src/lib/fonts.ts)
+// Display = Sora (rounded geometric, matches the product headings).
+// UI/body = Inter (matches the dashboard body text).
+// TODO(brand): swap if AsapNumbers ships a specific typeface.
 // ─────────────────────────────────────────────────────────────────────────────
-// Font family is loaded in src/lib/fonts.ts (via @remotion/google-fonts).
-// Inter is used as a stand-in for Apple's SF Pro (closest freely-available match).
-// TODO(brand): if NumberAsap uses a specific typeface, swap it in fonts.ts.
-export const fonts = {
-  // Filled in at runtime by loadFonts(); see src/lib/fonts.ts.
-  display: 'Inter, system-ui, -apple-system, sans-serif',
-  body: 'Inter, system-ui, -apple-system, sans-serif',
-} as const;
-
 export const type = {
-  // Large, confident display sizes (px @ 1080p).
-  hero: 118,
-  title: 96,
-  headline: 72,
+  // Sizes tuned for a 1080-wide VERTICAL canvas.
+  hero: 120,
+  title: 84,
+  headline: 60,
   subtitle: 40,
+  cardTitle: 34,
   body: 30,
-  caption: 24,
-  // Apple-style tight tracking on big type, looser on small.
+  ui: 27, // in-UI label size (nav items, buttons)
+  caption: 23,
+  micro: 19,
+
   trackingTight: '-0.03em',
   trackingNormal: '-0.01em',
-  trackingWide: '0.02em',
+  trackingWide: '0.04em',
+
   weightBlack: 800,
   weightBold: 700,
+  weightSemi: 600,
   weightMedium: 500,
   weightRegular: 400,
 } as const;
 
 // ─────────────────────────────────────────────────────────────────────────────
-// SPACING (px @ 1080p)
+// SPACING / RADIUS  (px)
 // ─────────────────────────────────────────────────────────────────────────────
 export const spacing = {
   xs: 8,
-  sm: 16,
-  md: 28,
-  lg: 48,
-  xl: 80,
-  xxl: 140,
+  sm: 14,
+  md: 22,
+  lg: 36,
+  xl: 60,
+  xxl: 110,
+} as const;
+
+export const radius = {
+  sm: 12,
+  md: 18,
+  lg: 26,
+  xl: 34,
+  pill: 999,
 } as const;
 
 // ─────────────────────────────────────────────────────────────────────────────
-// VIDEO / FORMAT
+// VIDEO / FORMAT  — VERTICAL, 60fps
 // ─────────────────────────────────────────────────────────────────────────────
 export const video = {
-  width: 1920,
-  height: 1080,
-  fps: 30,
+  width: 1080,
+  height: 1920,
+  fps: 60,
 } as const;
+
+// Currency helper — the product prices in Naira.
+export const naira = (n: number) =>
+  '₦' + n.toLocaleString('en-NG', {minimumFractionDigits: 2, maximumFractionDigits: 2});

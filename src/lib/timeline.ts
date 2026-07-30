@@ -1,70 +1,43 @@
 /**
- * timeline.ts — The master timing map for the whole video.
- *
- * Both the visual sequencing (src/Video.tsx) AND the sound design
- * (src/components/SoundDesign.tsx) read from here, so audio cues stay perfectly
- * locked to scene changes no matter how you retune durations.
- *
- * Because scenes cross-fade (TransitionSeries), each scene overlaps the next by
- * TRANSITION_FRAMES. The absolute start frame of each scene therefore shifts
- * earlier by the accumulated overlap — computed for you below.
+ * timeline.ts — Master timing map. Derived from the VO script so audio, captions
+ * and visuals all share ONE set of frame numbers. Change durations in content.ts
+ * (SCRIPT[].seconds) and everything downstream recomputes.
  */
 import {video} from '../theme';
+import {BUILT_SCRIPT} from '../content';
 
 const {fps} = video;
 
-// ─────────────────────────────────────────────────────────────────────────────
-// DURATIONS — tune these freely; everything else recomputes. (frames @ 30fps)
-// ─────────────────────────────────────────────────────────────────────────────
-export const DUR = {
-  hook: 3 * fps, //  90 → 0–3s   Hook
-  reveal: 5 * fps, // 150 → Product reveal
-  feature: Math.round(5.33 * fps), // ~160 → each of 3 feature beats
-  cta: 6 * fps, // 180 → CTA / end card
-} as const;
+/** Cross-scene transition length (the overlap). ~0.4s of butter @ 60fps. */
+export const TRANSITION_FRAMES = 24;
 
-/** Length of every cross-scene transition (the overlap). ~0.6s of butter. */
-export const TRANSITION_FRAMES = 18;
+export type SceneTiming = {
+  id: string;
+  duration: number; // frames
+  start: number; // absolute start frame (accounting for transition overlaps)
+};
 
-// ─────────────────────────────────────────────────────────────────────────────
-// SCENE ORDER — drives both the TransitionSeries and the timing math.
-// ─────────────────────────────────────────────────────────────────────────────
-export type SceneId = 'hook' | 'reveal' | 'feature1' | 'feature2' | 'feature3' | 'cta';
-
-export const SCENE_ORDER: {id: SceneId; duration: number}[] = [
-  {id: 'hook', duration: DUR.hook},
-  {id: 'reveal', duration: DUR.reveal},
-  {id: 'feature1', duration: DUR.feature},
-  {id: 'feature2', duration: DUR.feature},
-  {id: 'feature3', duration: DUR.feature},
-  {id: 'cta', duration: DUR.cta},
-];
-
-/**
- * Absolute start frame of each scene, accounting for transition overlaps.
- * scene[i].start = sum(previous durations) - (i * TRANSITION_FRAMES)
- */
-export const sceneStarts: Record<SceneId, number> = (() => {
-  const out = {} as Record<SceneId, number>;
+/** Per-scene duration in frames, from the script's seconds. */
+export const SCENES: SceneTiming[] = (() => {
   let acc = 0;
-  SCENE_ORDER.forEach((s, i) => {
-    out[s.id] = acc - i * TRANSITION_FRAMES;
-    acc += s.duration;
+  return BUILT_SCRIPT.map((s, i) => {
+    const duration = Math.round(s.seconds * fps);
+    const start = acc - i * TRANSITION_FRAMES;
+    acc += duration;
+    return {id: s.id, duration, start};
   });
-  return out;
 })();
+
+export const durationOf = (id: string) =>
+  SCENES.find((s) => s.id === id)?.duration ?? Math.round(4 * fps);
 
 /** Total composition length, minus every overlap. */
 export const TOTAL_FRAMES =
-  SCENE_ORDER.reduce((sum, s) => sum + s.duration, 0) -
-  (SCENE_ORDER.length - 1) * TRANSITION_FRAMES;
+  SCENES.reduce((sum, s) => sum + s.duration, 0) - (SCENES.length - 1) * TRANSITION_FRAMES;
 
-/**
- * WHOOSH cue frames — centered on each scene transition. One per boundary.
- * (Every scene start after the first sits in the middle of a transition.)
- */
-export const whooshFrames: number[] = SCENE_ORDER.slice(1).map(
-  (s) => sceneStarts[s.id] + Math.round(TRANSITION_FRAMES / 2),
+/** Whoosh cue frames — centered on each scene transition (one per boundary). */
+export const whooshFrames: number[] = SCENES.slice(1).map(
+  (s) => s.start + Math.round(TRANSITION_FRAMES / 2),
 );
 
 export {fps};
