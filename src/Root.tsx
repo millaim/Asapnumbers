@@ -1,46 +1,75 @@
-import "./index.css";
-import { Composition } from "remotion";
-import { HelloWorld, myCompSchema } from "./HelloWorld";
-import { Logo, myCompSchema2 } from "./HelloWorld/Logo";
+/**
+ * Root.tsx — Composition registry.
+ *
+ * • "PromoVideo" is the full ~28s film.
+ * • Each scene is ALSO registered standalone so you can preview/approve them in
+ *   isolation in the Remotion Studio sidebar. Start with "Hook" to sign off on
+ *   the motion style before the rest is polished.
+ *
+ * All timing/format constants come from theme.ts and lib/timeline.ts.
+ */
+import React from 'react';
+import {Composition} from 'remotion';
+import './index.css';
 
-// Each <Composition> is an entry in the sidebar!
+import {video} from './theme';
+import {DUR, TOTAL_FRAMES} from './lib/timeline';
+import {PromoVideo} from './Video';
+import {Hook} from './scenes/Hook';
+import {ProductReveal} from './scenes/ProductReveal';
+import {FeatureBeat} from './scenes/FeatureBeat';
+import {CTA} from './scenes/CTA';
+import {features} from './content';
+
+const {width, height, fps} = video;
 
 export const RemotionRoot: React.FC = () => {
   return (
     <>
+      {/* ── THE FULL FILM ─────────────────────────────────────────────── */}
       <Composition
-        // You can take the "id" to render a video:
-        // npx remotion render HelloWorld
-        id="HelloWorld"
-        component={HelloWorld}
-        durationInFrames={150}
-        fps={30}
-        width={1920}
-        height={1080}
-        // You can override these props for each render:
-        // https://www.remotion.dev/docs/parametrized-rendering
-        schema={myCompSchema}
-        defaultProps={{
-          titleText: "Welcome to Remotion",
-          titleColor: "#000000",
-          logoColor1: "#91EAE4",
-          logoColor2: "#86A8E7",
-        }}
+        id="PromoVideo"
+        component={PromoVideo}
+        durationInFrames={TOTAL_FRAMES}
+        fps={fps}
+        width={width}
+        height={height}
       />
 
-      {/* Mount any React component to make it show up in the sidebar and work on it individually! */}
+      {/* ── STANDALONE SCENES (for isolated preview/approval) ──────────── */}
       <Composition
-        id="OnlyLogo"
-        component={Logo}
-        durationInFrames={150}
-        fps={30}
-        width={1920}
-        height={1080}
-        schema={myCompSchema2}
-        defaultProps={{
-          logoColor1: "#91dAE2" as const,
-          logoColor2: "#86A8E7" as const,
-        }}
+        id="Hook"
+        component={Hook}
+        durationInFrames={DUR.hook}
+        fps={fps}
+        width={width}
+        height={height}
+      />
+      <Composition
+        id="ProductReveal"
+        component={ProductReveal}
+        durationInFrames={DUR.reveal}
+        fps={fps}
+        width={width}
+        height={height}
+      />
+      {/* FeatureBeat needs props → give the preview a default via defaultProps. */}
+      <Composition
+        id="FeatureBeat"
+        component={FeatureBeat}
+        durationInFrames={DUR.feature}
+        fps={fps}
+        width={width}
+        height={height}
+        defaultProps={{...features[0], index: 0}}
+      />
+      <Composition
+        id="CTA"
+        component={CTA}
+        durationInFrames={DUR.cta}
+        fps={fps}
+        width={width}
+        height={height}
       />
     </>
   );
