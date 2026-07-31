@@ -27,6 +27,8 @@ export type IconName =
   | 'sun'
   | 'logout'
   | 'send'
+  | 'mail'
+  | 'lock'
   | 'external';
 
 export const Icon: React.FC<{
@@ -88,6 +90,10 @@ export const Icon: React.FC<{
       return (<svg {...p}><path d="M9 4H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h4" /><path d="M16 17l5-5-5-5M21 12H9" /></svg>);
     case 'send':
       return (<svg {...p}><path d="M22 2 11 13M22 2l-7 20-4-9-9-4z" /></svg>);
+    case 'mail':
+      return (<svg {...p}><rect x="3" y="5" width="18" height="14" rx="2.5" /><path d="m4 7 8 6 8-6" /></svg>);
+    case 'lock':
+      return (<svg {...p}><rect x="4" y="10" width="16" height="11" rx="2.5" /><path d="M8 10V7a4 4 0 0 1 8 0v3" /></svg>);
     case 'external':
       return (<svg {...p}><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" /></svg>);
   }

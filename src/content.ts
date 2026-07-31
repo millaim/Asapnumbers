@@ -2,15 +2,15 @@
  * content.ts — ALL copy, the voice-over script, and the product data pulled
  * from the AsapNumbers screenshots. Edit here to re-script the film.
  *
- * `built: true` marks the scenes fully implemented in this pass
- * (Logo Reveal, Dashboard, Fund Wallet, Virtual Numbers). The remaining
- * storyboard scenes' VO is included below for the next passes.
+ * `built: true` marks scenes implemented and sequenced. The film order is the
+ * order of BUILT_SCRIPT (narrative order below).
  */
 
 export const brand = {
   name: 'AsapNumbers',
   wordmark: {first: 'ASAP', second: 'NUMBERS'},
   url: 'numberasap.com',
+  urlFull: 'www.numberasap.com',
   tagline: 'Virtual Numbers • Airtime • Utilities',
 } as const;
 
@@ -40,6 +40,47 @@ export const nav = {
     {id: 'profile', label: 'My Profile', icon: 'user'},
     {id: 'fund', label: 'Fund Wallet', icon: 'card'},
   ],
+} as const;
+
+/** Homepage / hero. No marketing-page screenshot existed, so this copy is
+ *  placeholder in the product's direction — TODO(brand): confirm against site. */
+export const homepage = {
+  headline: ['Every number.', 'Every service.', 'One platform.'],
+  sub: 'Virtual numbers, OTP verification, airtime, data, eSIMs and bill payments — all in one secure wallet.',
+  ctaPrimary: 'Get Started',
+  ctaSecondary: 'Sign In',
+  features: [
+    {id: 'numbers', title: 'Virtual Numbers', sub: 'SMS & OTP verification', icon: 'phone'},
+    {id: 'airtime', title: 'Airtime & Data', sub: 'Top up any network', icon: 'bolt'},
+    {id: 'utilities', title: 'Utility Payments', sub: 'Electricity, cable & more', icon: 'card'},
+    {id: 'esim', title: 'eSIM', sub: 'Global connectivity', icon: 'sim'},
+  ],
+} as const;
+
+/** Create Account — the 3-step wizard from the screenshot. */
+export const createAccount = {
+  steps: [
+    {id: 'personal', label: 'Personal', icon: 'user'},
+    {id: 'contact', label: 'Contact', icon: 'mail'},
+    {id: 'security', label: 'Security', icon: 'lock'},
+  ],
+  heading: 'Personal Information',
+  subheading: 'Tell us about yourself',
+  fields: [
+    {label: 'First Name', value: 'John', icon: 'user'},
+    {label: 'Last Name', value: 'Smith', icon: 'user'},
+    {label: 'Username', value: 'johnsmith123', icon: 'user', prefix: '@'},
+  ],
+  cta: 'Next ›',
+} as const;
+
+/** Login. No screenshot — consistent with the auth style (cyan). */
+export const login = {
+  heading: 'Welcome back',
+  subheading: 'Sign in to your dashboard',
+  email: account.email,
+  password: '••••••••••',
+  cta: 'Sign In',
 } as const;
 
 export const dashboard = {
@@ -84,22 +125,26 @@ export const virtualNumbers = {
   country: {flag: '🇺🇸', label: 'United States'},
   service: '009ibbq',
   cost: 1185,
-  // The OTP that "arrives" after purchase (demo).
   otp: {sender: 'AsapNumbers', code: '4471', message: 'is your verification code'},
 } as const;
 
+/** Closing outro / CTA. */
+export const outro = {
+  words: ['Fast.', 'Secure.', 'Reliable.'],
+  cta: 'Visit us at',
+  url: brand.urlFull,
+} as const;
+
 // ─────────────────────────────────────────────────────────────────────────────
-// VOICE-OVER SCRIPT + CAPTIONS
-// tokens: {t: word/phrase, hl?: highlight} — the subtitle bar reveals them
-// progressively and pops the highlighted ones in the brand accent.
+// VOICE-OVER SCRIPT + CAPTIONS  (narrative order = film order)
 // ─────────────────────────────────────────────────────────────────────────────
 type Token = {t: string; hl?: boolean};
 export type SceneScript = {
   id: string;
   built: boolean;
   seconds: number;
-  vo: string; // full narration for ElevenLabs
-  caption: Token[]; // word-synced on-screen subtitle
+  vo: string;
+  caption: Token[];
 };
 
 export const SCRIPT: SceneScript[] = [
@@ -109,14 +154,36 @@ export const SCRIPT: SceneScript[] = [
     seconds: 4,
     vo: 'Welcome to AsapNumbers — your all-in-one platform for virtual numbers, digital services, and seamless online payments.',
     caption: [
-      {t: 'Welcome to'},
-      {t: 'AsapNumbers', hl: true},
-      {t: '—'},
-      {t: 'virtual numbers,', hl: true},
-      {t: 'digital services'},
-      {t: '&'},
-      {t: 'payments', hl: true},
+      {t: 'Welcome to'}, {t: 'AsapNumbers', hl: true}, {t: '—'},
+      {t: 'virtual numbers,', hl: true}, {t: 'digital services'}, {t: '&'}, {t: 'payments', hl: true},
     ],
+  },
+  {
+    id: 'homepage',
+    built: true,
+    seconds: 6,
+    vo: 'Whether you need virtual numbers, airtime, data, or utility payments, AsapNumbers brings everything together in one secure platform.',
+    caption: [
+      {t: 'Numbers,'}, {t: 'airtime,', hl: true}, {t: 'data'}, {t: '&'}, {t: 'bills —'},
+      {t: 'one'}, {t: 'secure platform', hl: true},
+    ],
+  },
+  {
+    id: 'createAccount',
+    built: true,
+    seconds: 8,
+    vo: "Getting started is simple. Fill in your details, create your account, and you're ready to go in just a few moments.",
+    caption: [
+      {t: 'Getting started'}, {t: 'is'}, {t: 'simple —', hl: true},
+      {t: 'fill in your details'}, {t: '&'}, {t: 'create your'}, {t: 'account', hl: true},
+    ],
+  },
+  {
+    id: 'login',
+    built: true,
+    seconds: 5,
+    vo: 'Once registered, simply sign in to access your personalized dashboard.',
+    caption: [{t: 'Sign in'}, {t: 'to access'}, {t: 'your'}, {t: 'dashboard', hl: true}],
   },
   {
     id: 'dashboard',
@@ -124,15 +191,8 @@ export const SCRIPT: SceneScript[] = [
     seconds: 7,
     vo: 'Your dashboard gives you instant access to every feature from one central location — your wallet, virtual numbers, utilities, and quick actions.',
     caption: [
-      {t: 'One'},
-      {t: 'dashboard', hl: true},
-      {t: 'for'},
-      {t: 'everything —'},
-      {t: 'your'},
-      {t: 'wallet,', hl: true},
-      {t: 'numbers'},
-      {t: '&'},
-      {t: 'quick actions', hl: true},
+      {t: 'One'}, {t: 'dashboard', hl: true}, {t: 'for'}, {t: 'everything —'},
+      {t: 'your'}, {t: 'wallet,', hl: true}, {t: 'numbers'}, {t: '&'}, {t: 'quick actions', hl: true},
     ],
   },
   {
@@ -141,14 +201,8 @@ export const SCRIPT: SceneScript[] = [
     seconds: 7,
     vo: 'Funding your wallet is effortless. A unique virtual account is generated instantly, so you can transfer directly from your bank and get credited within seconds.',
     caption: [
-      {t: 'Funding is'},
-      {t: 'effortless.', hl: true},
-      {t: 'A unique'},
-      {t: 'virtual account', hl: true},
-      {t: 'is generated'},
-      {t: 'instantly —'},
-      {t: 'credited in'},
-      {t: 'seconds', hl: true},
+      {t: 'Funding is'}, {t: 'effortless.', hl: true}, {t: 'A unique'}, {t: 'virtual account', hl: true},
+      {t: 'is generated'}, {t: 'instantly —'}, {t: 'credited in'}, {t: 'seconds', hl: true},
     ],
   },
   {
@@ -157,41 +211,12 @@ export const SCRIPT: SceneScript[] = [
     seconds: 8,
     vo: 'Choose your server, country, and service, then generate a virtual number within seconds — and receive your verification codes instantly.',
     caption: [
-      {t: 'Pick a'},
-      {t: 'server,', hl: true},
-      {t: 'country'},
-      {t: '&'},
-      {t: 'service,'},
-      {t: 'generate a'},
-      {t: 'virtual number', hl: true},
-      {t: '&'},
-      {t: 'receive'},
-      {t: 'your OTP', hl: true},
+      {t: 'Pick a'}, {t: 'server,', hl: true}, {t: 'country'}, {t: '&'}, {t: 'service,'},
+      {t: 'generate a'}, {t: 'virtual number', hl: true}, {t: '&'}, {t: 'receive'}, {t: 'your OTP', hl: true},
     ],
   },
 
-  // ── Remaining storyboard scenes — VO ready, UI built in the next pass. ──
-  {
-    id: 'homepage',
-    built: false,
-    seconds: 6,
-    vo: 'Whether you need virtual numbers, airtime, data, or utility payments, AsapNumbers brings everything together in one secure platform.',
-    caption: [{t: 'Everything'}, {t: 'in one'}, {t: 'secure platform', hl: true}],
-  },
-  {
-    id: 'createAccount',
-    built: false,
-    seconds: 6,
-    vo: "Getting started is simple. Fill in your details, create your account, and you're ready to go in just a few moments.",
-    caption: [{t: 'Create your'}, {t: 'account', hl: true}, {t: 'in moments'}],
-  },
-  {
-    id: 'login',
-    built: false,
-    seconds: 5,
-    vo: 'Once registered, simply sign in to access your personalized dashboard.',
-    caption: [{t: 'Sign in'}, {t: 'to your'}, {t: 'dashboard', hl: true}],
-  },
+  // ── Not yet built (VO ready): Utilities & Purchase flow ──
   {
     id: 'utilities',
     built: false,
@@ -206,14 +231,19 @@ export const SCRIPT: SceneScript[] = [
     vo: 'Complete your purchase in just a few taps, with fast, secure, and reliable processing.',
     caption: [{t: 'A few taps —'}, {t: 'fast', hl: true}, {t: '&'}, {t: 'secure', hl: true}],
   },
+
+  // ── Closing outro (built) ──
   {
     id: 'outro',
-    built: false,
+    built: true,
     seconds: 6,
-    vo: 'From account verification to everyday digital services, AsapNumbers makes every transaction simple, secure, and reliable.',
-    caption: [{t: 'Fast.', hl: true}, {t: 'Secure.', hl: true}, {t: 'Reliable.', hl: true}],
+    vo: 'From account verification to everyday digital services, AsapNumbers makes every transaction simple, secure, and reliable. Get started today at www dot number asap dot com.',
+    caption: [
+      {t: 'Fast.', hl: true}, {t: 'Secure.', hl: true}, {t: 'Reliable.', hl: true},
+      {t: 'Visit'}, {t: 'www.numberasap.com', hl: true},
+    ],
   },
 ];
 
-/** Just the scenes built in this pass, in order. */
+/** Scenes built, in film order. */
 export const BUILT_SCRIPT = SCRIPT.filter((s) => s.built);

@@ -46,6 +46,22 @@ export const useButtonPress = (atFrame: number) => {
   return interpolate(t, [0, 4, 12], [1, 0.94, 1], {extrapolateRight: 'clamp'});
 };
 
+/**
+ * useTyped — reveals `text` character-by-character from `startFrame`, returning
+ * the shown substring, a blinking caret flag, and whether typing is active
+ * (so callers can fire a typing SFX). `framesPerChar` controls speed.
+ */
+export const useTyped = (text: string, startFrame: number, framesPerChar = 2) => {
+  const frame = useCurrentFrame();
+  const elapsed = frame - startFrame;
+  const count = Math.max(0, Math.min(text.length, Math.floor(elapsed / framesPerChar)));
+  const typing = elapsed >= 0 && count < text.length;
+  const done = count >= text.length;
+  // Caret blinks while focused (typing or just finished).
+  const caret = elapsed >= 0 && Math.floor(frame / 18) % 2 === 0;
+  return {shown: text.slice(0, count), typing, done, caret, started: elapsed >= 0};
+};
+
 export type Waypoint = {frame: number; x: number; y: number; click?: boolean};
 
 /**
