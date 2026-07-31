@@ -99,13 +99,13 @@ export const FundWallet: React.FC = () => {
         </div>
       </AppShell>
 
-      {/* Cursor glides to Copy and clicks. Coords in canvas space. */}
+      {/* Cursor glides to the Copy button and clicks it. Coords = button center. */}
       <Cursor
         waypoints={[
           {frame: 96, x: 760, y: 1500},
-          {frame: COPY_CLICK - 8, x: 940, y: 760},
-          {frame: COPY_CLICK, x: 940, y: 760, click: true},
-          {frame: 260, x: 940, y: 760},
+          {frame: COPY_CLICK - 10, x: 958, y: 865},
+          {frame: COPY_CLICK, x: 958, y: 865, click: true},
+          {frame: 260, x: 958, y: 865},
         ]}
       />
 

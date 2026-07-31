@@ -113,13 +113,13 @@ export const CreateAccount: React.FC = () => {
         </div>
       </AuthChrome>
 
-      {/* Cursor clicks Next. */}
+      {/* Cursor clicks the Next button. Coords = button center. */}
       <Cursor
         waypoints={[
-          {frame: 220, x: 720, y: 1500},
-          {frame: NEXT_CLICK - 10, x: 540, y: 1220},
-          {frame: NEXT_CLICK, x: 540, y: 1220, click: true},
-          {frame: 470, x: 540, y: 1220},
+          {frame: 220, x: 720, y: 1620},
+          {frame: NEXT_CLICK - 10, x: 540, y: 1435},
+          {frame: NEXT_CLICK, x: 540, y: 1435, click: true},
+          {frame: 470, x: 540, y: 1435},
         ]}
       />
 

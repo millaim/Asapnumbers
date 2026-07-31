@@ -118,14 +118,15 @@ export const VirtualNumbers: React.FC = () => {
         </div>
       </AppShell>
 
-      {/* Cursor selects, then clicks Get Number. */}
+      {/* Cursor selects Server 1, then clicks Get Number. Coords = element centers. */}
       <Cursor
         waypoints={[
           {frame: 120, x: 760, y: 1600},
-          {frame: 180, x: 560, y: 560, click: true},
-          {frame: GET_CLICK - 10, x: 680, y: 1180},
-          {frame: GET_CLICK, x: 680, y: 1180, click: true},
-          {frame: 470, x: 680, y: 1180},
+          {frame: 176, x: 525, y: 335},
+          {frame: 184, x: 525, y: 335, click: true},
+          {frame: GET_CLICK - 12, x: 690, y: 1128},
+          {frame: GET_CLICK, x: 690, y: 1128, click: true},
+          {frame: 470, x: 690, y: 1128},
         ]}
       />
 
@@ -134,7 +135,7 @@ export const VirtualNumbers: React.FC = () => {
 
       <Captions tokens={script.caption} startAt={26} span={280} bottom={120} />
 
-      <Sfx name="click" at={180} />
+      <Sfx name="click" at={184} />
       <Sfx name="click" at={GET_CLICK} />
       <Sfx name="success" at={GET_CLICK + 12} />
       <Sfx name="notify" at={GET_CLICK + 46} />

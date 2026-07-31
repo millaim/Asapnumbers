@@ -78,7 +78,7 @@ export const createAccount = {
 export const login = {
   heading: 'Welcome back',
   subheading: 'Sign in to your dashboard',
-  email: account.email,
+  email: 'johnsmith@gmail.com',
   password: '••••••••••',
   cta: 'Sign In',
 } as const;

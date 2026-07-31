@@ -75,12 +75,13 @@ export const Login: React.FC = () => {
         </div>
       </AuthChrome>
 
+      {/* Cursor clicks the Sign In button. Coords = button center. */}
       <Cursor
         waypoints={[
-          {frame: 130, x: 640, y: 1400},
-          {frame: SIGNIN_CLICK - 10, x: 540, y: 1080},
-          {frame: SIGNIN_CLICK, x: 540, y: 1080, click: true},
-          {frame: 300, x: 540, y: 1080},
+          {frame: 130, x: 640, y: 1450},
+          {frame: SIGNIN_CLICK - 10, x: 540, y: 1233},
+          {frame: SIGNIN_CLICK, x: 540, y: 1233, click: true},
+          {frame: 300, x: 540, y: 1233},
         ]}
       />
 
