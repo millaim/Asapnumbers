@@ -14,11 +14,11 @@ export const brand = {
   tagline: 'Virtual Numbers • Airtime • Utilities',
 } as const;
 
-/** The demo account shown in the screenshots. */
+/** The demo account. Matches the John Smith identity created in the flow. */
 export const account = {
-  name: 'Justice Plain',
-  email: 'justiceplain@gmail.com',
-  initials: 'JP',
+  name: 'John Smith',
+  email: 'johnsmith@gmail.com',
+  initials: 'JS',
 } as const;
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -107,7 +107,7 @@ export const fundWallet = {
   min: 100,
   accountNumber: '2159327326',
   bankName: 'Paga',
-  accountName: 'Asapnumbers – JusticePlain (OasisPay)',
+  accountName: 'Asapnumbers – JohnSmith (OasisPay)',
   steps: [
     'Open your bank app or USSD',
     'Transfer to the account number above',
