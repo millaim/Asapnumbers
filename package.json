@@ -31,6 +31,7 @@
     "build": "remotion bundle",
     "upgrade": "remotion upgrade",
     "lint": "eslint src && tsc",
+    "sfx": "node scripts/generate-sfx.mjs",
     "vo": "node scripts/generate-vo.mjs",
     "render": "remotion render PromoVideo out/asapnumbers-vertical.mp4 --codec=h264 --crf=16",
     "render:hq": "remotion render PromoVideo out/asapnumbers-vertical.mov --codec=prores --prores-profile=4444"
