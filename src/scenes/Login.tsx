@@ -89,8 +89,9 @@ export const Login: React.FC = () => {
 
       <Captions tokens={script.caption} startAt={18} span={200} bottom={130} />
 
-      <Sfx name="type" at={EMAIL_START} />
-      <Sfx name="type" at={PW_START} />
+      {/* Key ticks as email + password fill. */}
+      {[24, 30, 36, 42, 48, 54].map((f) => <Sfx key={`e${f}`} name="type" at={f} />)}
+      {[84, 90, 96, 102].map((f) => <Sfx key={`p${f}`} name="type" at={f} />)}
       <Sfx name="click" at={SIGNIN_CLICK} />
       <Sfx name="success" at={LOADING_END} />
     </AbsoluteFill>

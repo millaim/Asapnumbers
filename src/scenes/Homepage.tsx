@@ -82,9 +82,13 @@ export const Homepage: React.FC = () => {
 
       <Captions tokens={script.caption} startAt={24} span={280} bottom={130} />
 
+      {/* Feature cards pop in (staggered), then the CTAs settle with a swipe+click. */}
       <Sfx name="pop" at={46} />
+      <Sfx name="pop" at={51} />
       <Sfx name="pop" at={56} />
+      <Sfx name="pop" at={61} />
       <Sfx name="swipe" at={72} />
+      <Sfx name="click" at={78} />
     </AbsoluteFill>
   );
 };

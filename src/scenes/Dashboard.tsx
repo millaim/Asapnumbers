@@ -121,10 +121,11 @@ export const Dashboard: React.FC = () => {
 
       <Captions tokens={script.caption} startAt={30} span={340} bottom={150} />
 
-      {/* Sound: staggered pops as tiles/cards land. */}
-      <Sfx name="pop" at={14} />
-      <Sfx name="pop" at={30} />
-      <Sfx name="pop" at={48} />
+      {/* Sound: wallet swoosh, then a satisfying cascade of pops as tiles/cards land. */}
+      <Sfx name="swipe" at={14} />
+      {[26, 30, 34, 38].map((f) => <Sfx key={`t${f}`} name="pop" at={f} />)}
+      {[48, 53, 58, 63].map((f) => <Sfx key={`a${f}`} name="pop" at={f} />)}
+      <Sfx name="pop" at={66} />
     </AbsoluteFill>
   );
 };

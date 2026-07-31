@@ -12,14 +12,16 @@ right animation frames.
   point `src/lib/audio.ts` at new paths. Tune loudness in `MIX` there.
 
 ```
-music-bed.wav          ← ambient pad, loops under the whole film (low in the mix)
-sfx/whoosh.wav         ← scene-transition swoosh (automatic, one per cut)
+music-bed.wav          ← warm 4-chord bed (Cadd9–G–Am7–Fmaj7) + arpeggio, loops (low)
+sfx/whoosh.wav         ← soft transition swell (airy + tonal glide + reverb — not a harsh swoosh)
 sfx/click.wav          ← cursor clicks a button
 sfx/pop.wav            ← a card / tile lands into place
-sfx/type.wav           ← form fields typing
-sfx/success.wav        ← success chime (logo land, purchase, sign-in)
-sfx/notify.wav         ← notification / OTP pop
-sfx/swipe.wav          ← tab / selection swipe
+sfx/type.wav           ← form fields typing (key ticks)
+sfx/success.wav        ← success chime with reverb (logo land, purchase, sign-in)
+sfx/notify.wav         ← notification / OTP bell
+sfx/swipe.wav          ← tab / selection / wallet swipe
+sfx/impact.wav         ← soft weighted thud (logo / large element landing)
+sfx/shimmer.wav        ← high sparkle (logo tagline, outro CTA)
 ```
 
 ## Voice-over — needs one command (ElevenLabs)

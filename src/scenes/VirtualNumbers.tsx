@@ -135,6 +135,9 @@ export const VirtualNumbers: React.FC = () => {
 
       <Captions tokens={script.caption} startAt={26} span={280} bottom={120} />
 
+      {/* Server cards pop in; select click; Get Number click; purchase chime; OTP ding. */}
+      {[20, 24, 28, 32].map((f) => <Sfx key={`sv${f}`} name="pop" at={f} />)}
+      <Sfx name="pop" at={72} />
       <Sfx name="click" at={184} />
       <Sfx name="click" at={GET_CLICK} />
       <Sfx name="success" at={GET_CLICK + 12} />

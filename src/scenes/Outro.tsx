@@ -73,10 +73,13 @@ export const Outro: React.FC = () => {
 
       <Captions tokens={script.caption} startAt={70} span={140} bottom={220} />
 
+      {/* Wordmark impact; each punch word pops; shimmer + chime on the CTA. */}
+      <Sfx name="impact" at={6} />
       <Sfx name="pop" at={WORD_DELAYS[0]} />
       <Sfx name="pop" at={WORD_DELAYS[1]} />
       <Sfx name="pop" at={WORD_DELAYS[2]} />
-      <Sfx name="success" at={CTA_AT} />
+      <Sfx name="shimmer" at={CTA_AT} />
+      <Sfx name="success" at={CTA_AT + 4} />
     </AbsoluteFill>
   );
 };

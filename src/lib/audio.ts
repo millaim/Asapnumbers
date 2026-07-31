@@ -16,13 +16,15 @@ const dir = 'assets/audio';
 export const AUDIO = {
   music: staticFile(`${dir}/music-bed.wav`), // TODO(audio): licensed cinematic-electronic track
   sfx: {
-    whoosh: staticFile(`${dir}/sfx/whoosh.wav`),
+    whoosh: staticFile(`${dir}/sfx/whoosh.wav`), // soft transition swell (not a harsh swoosh)
     click: staticFile(`${dir}/sfx/click.wav`),
     pop: staticFile(`${dir}/sfx/pop.wav`),
     type: staticFile(`${dir}/sfx/type.wav`),
     success: staticFile(`${dir}/sfx/success.wav`),
     notify: staticFile(`${dir}/sfx/notify.wav`),
     swipe: staticFile(`${dir}/sfx/swipe.wav`),
+    impact: staticFile(`${dir}/sfx/impact.wav`), // soft weighted thud (logo land)
+    shimmer: staticFile(`${dir}/sfx/shimmer.wav`), // high sparkle (outro CTA)
   },
 } as const;
 
@@ -33,15 +35,17 @@ export type SfxName = keyof typeof AUDIO.sfx;
 
 /** Master mix levels (0..1). Music stays low so it never covers narration. */
 export const MIX = {
-  music: 0.22,
+  music: 0.2,
   vo: 1.0,
-  whoosh: 0.7,
-  click: 0.5,
-  pop: 0.55,
-  type: 0.4,
-  success: 0.7,
-  notify: 0.65,
-  swipe: 0.5,
+  whoosh: 0.5, // the soft swell sits gently under the cut
+  click: 0.42,
+  pop: 0.5,
+  type: 0.32,
+  success: 0.62,
+  notify: 0.6,
+  swipe: 0.45,
+  impact: 0.6,
+  shimmer: 0.5,
 } as const;
 
 /** Master switch — set false to preview pure motion with no audio. */

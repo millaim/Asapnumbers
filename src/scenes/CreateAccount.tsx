@@ -127,10 +127,14 @@ export const CreateAccount: React.FC = () => {
 
       <Captions tokens={script.caption} startAt={20} span={330} bottom={130} />
 
-      {/* Typing SFX bursts as each field fills. */}
-      <Sfx name="type" at={TYPE_START[0]} />
-      <Sfx name="type" at={TYPE_START[1]} />
-      <Sfx name="type" at={TYPE_START[2]} />
+      {/* Step tabs pop in. */}
+      <Sfx name="pop" at={12} />
+      <Sfx name="pop" at={16} />
+      <Sfx name="pop" at={20} />
+      {/* Key ticks as each field auto-types. */}
+      {[40, 44, 48].map((f) => <Sfx key={`k${f}`} name="type" at={f} />)}
+      {[88, 92, 96, 100].map((f) => <Sfx key={`k${f}`} name="type" at={f} />)}
+      {[136, 142, 148, 154, 160, 166].map((f) => <Sfx key={`k${f}`} name="type" at={f} />)}
       <Sfx name="click" at={NEXT_CLICK} />
       <Sfx name="success" at={NEXT_CLICK + 6} />
     </AbsoluteFill>

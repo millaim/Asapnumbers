@@ -114,6 +114,11 @@ export const FundWallet: React.FC = () => {
 
       <Captions tokens={script.caption} startAt={22} span={330} bottom={120} />
 
+      {/* Cards land, tabs swipe, then the copy click + confirmation ding. */}
+      <Sfx name="pop" at={16} />
+      <Sfx name="swipe" at={30} />
+      <Sfx name="pop" at={40} />
+      {[66, 72, 78].map((f) => <Sfx key={`s${f}`} name="pop" at={f} />)}
       <Sfx name="click" at={COPY_CLICK} />
       <Sfx name="notify" at={COPY_CLICK + 4} />
     </AbsoluteFill>

@@ -75,8 +75,10 @@ export const LogoReveal: React.FC = () => {
 
       <Captions tokens={script.caption} startAt={20} span={190} bottom={260} />
 
-      {/* Sound: soft chime as the wordmark lands. */}
-      <Sfx name="success" at={24} />
+      {/* Sound: soft impact as the wordmark lands, chime, then a shimmer on the tagline. */}
+      <Sfx name="impact" at={20} />
+      <Sfx name="success" at={26} />
+      <Sfx name="shimmer" at={40} />
     </AbsoluteFill>
   );
 };

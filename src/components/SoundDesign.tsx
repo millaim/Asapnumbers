@@ -29,9 +29,9 @@ export const SoundDesign: React.FC = () => {
         </Sequence>
       ))}
 
-      {/* 3) Whoosh on every transition */}
+      {/* 3) Soft transition swell on every cut (full length so the reverb rings) */}
       {whooshFrames.map((f, i) => (
-        <Sequence key={`whoosh-${i}`} from={Math.max(0, f - 8)} durationInFrames={50} name={`whoosh-${i}`}>
+        <Sequence key={`whoosh-${i}`} from={Math.max(0, f - 10)} name={`whoosh-${i}`}>
           <Audio src={AUDIO.sfx.whoosh} volume={MIX.whoosh} />
         </Sequence>
       ))}
@@ -45,8 +45,9 @@ export const SoundDesign: React.FC = () => {
  */
 export const Sfx: React.FC<{name: SfxName; at: number; volume?: number}> = ({name, at, volume}) => {
   if (!SOUND_ENABLED) return null;
+  // No duration cap → each one-shot plays its full natural length (incl. reverb tail).
   return (
-    <Sequence from={at} durationInFrames={40} name={`sfx-${name}`}>
+    <Sequence from={at} name={`sfx-${name}`}>
       <Audio src={AUDIO.sfx[name]} volume={volume ?? MIX[name]} />
     </Sequence>
   );
